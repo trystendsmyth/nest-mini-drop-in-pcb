@@ -3298,16 +3298,6 @@
 	)
 	(wire
 		(pts
-			(xy 67.31 88.9) (xy 63.5 88.9)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "1ddf8a17-dbe6-4f34-a3d3-2e4389774f11")
-	)
-	(wire
-		(pts
 			(xy 147.32 129.54) (xy 149.86 129.54)
 		)
 		(stroke
@@ -3455,16 +3445,6 @@
 			(type default)
 		)
 		(uuid "484b6f36-6178-4a28-b2fa-9ceaaf68394d")
-	)
-	(wire
-		(pts
-			(xy 63.5 88.9) (xy 63.5 91.44)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4cb371c1-232f-4bfb-86a5-d27cb9ffbcda")
 	)
 	(wire
 		(pts
@@ -5337,7 +5317,7 @@
 				)
 			)
 		)
-		(property "Value" "0R"
+		(property "Value" "15k"
 			(at 75.184 87.376 90)
 			(effects
 				(font
@@ -5363,7 +5343,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Resistor"
+		(property "Description" "TAS5805M ADR: 15k to DVDD = I2C 0x2D"
 			(at 71.12 88.9 0)
 			(effects
 				(font
@@ -5381,6 +5361,8 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer Part" "0402WGF1502TCE" (at 71.12 88.9 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "LCSC Part #" "C25756" (at 71.12 88.9 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(pin "1"
 			(uuid "92acbe4d-841e-4243-8b58-792353a809a9")
 		)
@@ -6401,72 +6383,6 @@
 			(project "nest-mini-v2-drop-in-pcb"
 				(path "/204e071a-14ed-47a0-be54-332ac2b951cf/62ce711e-2967-4164-94ee-cdd918e5185e"
 					(reference "C88")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 63.5 91.44 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "5e660bff-fbc1-4b88-a4b0-73fe9436aaad")
-		(property "Reference" "#PWR0153"
-			(at 63.5 97.79 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GNDA"
-			(at 63.5 96.52 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 63.5 91.44 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 63.5 91.44 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 63.5 91.44 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "e1681aba-5faa-4cf5-8230-e5cfe23928c1")
-		)
-		(instances
-			(project ""
-				(path "/204e071a-14ed-47a0-be54-332ac2b951cf/62ce711e-2967-4164-94ee-cdd918e5185e"
-					(reference "#PWR0153")
 					(unit 1)
 				)
 			)
@@ -8809,6 +8725,8 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC Part #" "C478472" (at 129.54 99.06 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Manufacturer Part" "TAS5805MPWPR" (at 129.54 99.06 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(pin "23"
 			(uuid "e7ba63eb-fb66-4b74-9c0f-8f909231b8c3")
 		)
@@ -10095,5 +10013,22 @@
 				)
 			)
 		)
+	)
+	(wire (pts (xy 67.31 88.9) (xy 63.5 88.9)) (stroke (width 0) (type default)) (uuid "3755dd99-6893-426f-a3db-f7dc301caf44"))
+	(symbol
+		(lib_id "New_Library:PVDD1")
+		(at 63.5 88.9 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "ae1f313e-0501-47b5-b0f3-a7400a0d1b9f")
+		(property "Reference" "#PWR0950" (at 63.5 83.9 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Value" "DVDD" (at 63.5 93.9 0) (effects (font (size 1.27 1.27))))
+		(property "Footprint" "" (at 63.5 88.9 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Datasheet" "~" (at 63.5 88.9 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(pin "1" (uuid "f29f0237-d6a9-402b-af0f-c027cd92f4b0"))
+		(instances (project "nest-mini-v2-drop-in-pcb" (path "/204e071a-14ed-47a0-be54-332ac2b951cf/62ce711e-2967-4164-94ee-cdd918e5185e" (reference "#PWR0950") (unit 1))))
 	)
 )

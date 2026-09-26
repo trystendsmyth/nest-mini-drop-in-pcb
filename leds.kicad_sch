@@ -816,6 +816,217 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Logic_LevelTranslator:SN74LV1T34DCK"
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "U"
+			(at 5.08 6.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "SN74LV1T34DCK"
+			(at 5.08 3.81 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-353_SC-70-5"
+			(at 20.32 -6.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lv1t34.pdf"
+			(at -10.16 -5.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Single Power Supply, Single Buffer GATE, CMOS Logic, Level Shifter, SOT-353"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "ki_keywords" "single buffer level shift"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "ki_fp_filters" "SOT?353*"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(symbol "SN74LV1T34DCK_0_1"
+			(rectangle
+				(start -5.08 5.08)
+				(end 5.08 -5.08)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type background)
+				)
+			)
+			(polyline
+				(pts
+					(xy -0.762 0) (xy -2.54 0)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(polyline
+				(pts
+					(xy 1.016 0) (xy 2.54 0)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+		)
+		(symbol "SN74LV1T34DCK_1_1"
+			(polyline
+				(pts
+					(xy -0.762 -0.762) (xy -0.762 0.762) (xy 1.016 0) (xy -0.762 -0.762)
+				)
+				(stroke
+					(width 0)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+			(pin input line
+				(at -7.62 0 0)
+				(length 2.54)
+				(name "A"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin no_connect line
+				(at -5.08 2.54 0)
+				(length 2.54)
+				(hide yes)
+				(name "NC"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin power_in line
+				(at 0 7.62 270)
+				(length 2.54)
+				(name "VCC"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "5"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin power_in line
+				(at 0 -7.62 90)
+				(length 2.54)
+				(name "GND"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "3"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin output line
+				(at 7.62 0 180)
+				(length 2.54)
+				(name "Y"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "4"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+		)
+		(embedded_fonts no)
+	)
 	)
 	(junction
 		(at 222.25 71.12)
@@ -1073,16 +1284,6 @@
 	)
 	(wire
 		(pts
-			(xy 31.75 76.2) (xy 35.56 76.2)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "73c10f73-301c-4770-873e-d74d807ff0b3")
-	)
-	(wire
-		(pts
 			(xy 182.88 81.28) (xy 182.88 83.82)
 		)
 		(stroke
@@ -1300,28 +1501,6 @@
 			(type default)
 		)
 		(uuid "fd709875-1aa1-4bce-bdf0-faf51a5d8e20")
-	)
-	(global_label "ESP_WS2812"
-		(shape input)
-		(at 31.75 76.2 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "be90346f-23f8-4c29-8df9-6d4ac792f2da")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 16.6698 76.2 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
 	)
 	(symbol
 		(lib_id "power:+5V")
@@ -3879,5 +4058,131 @@
 				)
 			)
 		)
+	)
+	(wire (pts (xy 35.56 76.2) (xy 30.480000000000004 76.2)) (stroke (width 0) (type default)) (uuid "4c530e61-1bfb-4ded-b297-f81fc6ddb2ad"))
+	(label "LED_DIN_5V" (at 30.480000000000004 76.2 180) (fields_autoplaced yes) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "df484ada-a1d9-4f04-afcd-c1fe7420078a"))
+	(symbol
+		(lib_id "Logic_LevelTranslator:SN74LV1T34DCK")
+		(at 60.96 121.92 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "42ef7a51-4ae6-44f5-a1a0-a501e7414130")
+		(property "Reference" "U16" (at 60.96 116.92 0) (effects (font (size 1.27 1.27))))
+		(property "Value" "SN74LV1T34DCKR" (at 60.96 126.92 0) (effects (font (size 1.27 1.27))))
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-353_SC-70-5" (at 60.96 121.92 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Datasheet" "~" (at 60.96 121.92 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "MPN" "SN74LV1T34DCKR" (at 60.96 121.92 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Manufacturer" "Texas Instruments" (at 60.96 121.92 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "LCSC Part #" "C78541" (at 60.96 121.92 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Description" "3.3V->5V level shift for SK6812 data" (at 60.96 121.92 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Manufacturer Part" "SN74LV1T34DCKR" (at 60.96 121.92 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(pin "2" (uuid "e747a98a-86b3-4f59-85c0-f8fd2ea1885a"))
+		(pin "1" (uuid "ecdc45c1-01e1-483b-b1a5-262ceb5adf81"))
+		(pin "5" (uuid "ef7ff4e0-0741-458d-b9ee-e83dcfc41034"))
+		(pin "3" (uuid "4ee8b4aa-0bde-4e7d-80e2-5e3cd0a1d1a5"))
+		(pin "4" (uuid "c4aad884-c2fa-4691-b6ce-d6c27c0f62fa"))
+		(instances (project "nest-mini-v2-drop-in-pcb" (path "/204e071a-14ed-47a0-be54-332ac2b951cf/18f90dfa-9bd7-48d0-80c5-47366522e296" (reference "U16") (unit 1))))
+	)
+	(wire (pts (xy 53.34 121.92) (xy 48.260000000000005 121.92)) (stroke (width 0) (type default)) (uuid "b078ddb4-5812-4738-ab65-a56f4c6b289a"))
+	(global_label "ESP_WS2812"
+		(shape input)
+		(at 48.260000000000005 121.92 180)
+		(fields_autoplaced yes)
+		(effects (font (size 1.27 1.27)) (justify right))
+		(uuid "c0ca5f67-6bee-48b4-a3df-9c571a9915aa")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}" (at 48.260000000000005 121.92 0) (effects (font (size 1.27 1.27)) (hide yes)))
+	)
+	(no_connect (at 55.88 119.38) (uuid "4755f17a-c40b-4e74-9430-65b1b32f83f1"))
+	(wire (pts (xy 60.96 114.3) (xy 60.96 111.75999999999999)) (stroke (width 0) (type default)) (uuid "2129539a-74ea-4ff7-a0cc-ad708d17b02e"))
+	(symbol
+		(lib_id "power:+5V")
+		(at 60.96 111.75999999999999 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "dc746584-bdd3-463c-bbad-28b678f48f19")
+		(property "Reference" "#PWR0901" (at 60.96 106.75999999999999 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Value" "+5V" (at 60.96 116.75999999999999 0) (effects (font (size 1.27 1.27))))
+		(property "Footprint" "" (at 60.96 111.75999999999999 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Datasheet" "~" (at 60.96 111.75999999999999 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(pin "1" (uuid "78f2e536-a96c-49f1-9253-b88ad8880548"))
+		(instances (project "nest-mini-v2-drop-in-pcb" (path "/204e071a-14ed-47a0-be54-332ac2b951cf/18f90dfa-9bd7-48d0-80c5-47366522e296" (reference "#PWR0901") (unit 1))))
+	)
+	(wire (pts (xy 60.96 129.54) (xy 60.96 132.07999999999998)) (stroke (width 0) (type default)) (uuid "9dfdec50-9df4-47aa-9165-e3b3a0cfe8f9"))
+	(symbol
+		(lib_id "power:GND")
+		(at 60.96 132.07999999999998 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "f05ab4e7-5b34-4786-9e53-ac019d6f7898")
+		(property "Reference" "#PWR0902" (at 60.96 127.07999999999998 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Value" "GND" (at 60.96 137.07999999999998 0) (effects (font (size 1.27 1.27))))
+		(property "Footprint" "" (at 60.96 132.07999999999998 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Datasheet" "~" (at 60.96 132.07999999999998 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(pin "1" (uuid "0342d88a-f1ad-48a9-8097-8b5d03118732"))
+		(instances (project "nest-mini-v2-drop-in-pcb" (path "/204e071a-14ed-47a0-be54-332ac2b951cf/18f90dfa-9bd7-48d0-80c5-47366522e296" (reference "#PWR0902") (unit 1))))
+	)
+	(wire (pts (xy 68.58 121.92) (xy 73.66 121.92)) (stroke (width 0) (type default)) (uuid "7b52dbf6-7d38-499e-af57-d0ef36a8118f"))
+	(label "LED_DIN_5V" (at 73.66 121.92 0) (fields_autoplaced yes) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "829d4eb3-e140-4a2a-97b3-b31e675c6e5a"))
+	(symbol
+		(lib_id "Device:C")
+		(at 81.28 121.92 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "bfd0f444-5208-4c66-a36a-b8e4d3769d37")
+		(property "Reference" "C103" (at 81.28 116.92 0) (effects (font (size 1.27 1.27))))
+		(property "Value" "100nF" (at 81.28 126.92 0) (effects (font (size 1.27 1.27))))
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric" (at 81.28 121.92 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Datasheet" "~" (at 81.28 121.92 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Manufacturer Part" "CL05B104KO5NNNC" (at 81.28 121.92 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "LCSC Part #" "C1525" (at 81.28 121.92 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(pin "1" (uuid "87c20a14-5518-4413-9cca-bf9d5d61962e"))
+		(pin "2" (uuid "e5fe45de-069d-4ada-8954-56dab84f65f4"))
+		(instances (project "nest-mini-v2-drop-in-pcb" (path "/204e071a-14ed-47a0-be54-332ac2b951cf/18f90dfa-9bd7-48d0-80c5-47366522e296" (reference "C103") (unit 1))))
+	)
+	(wire (pts (xy 81.28 118.11) (xy 81.28 115.57)) (stroke (width 0) (type default)) (uuid "dada9542-16ec-4555-b650-81914ff82923"))
+	(symbol
+		(lib_id "power:+5V")
+		(at 81.28 115.57 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "e10b2409-a4f1-4b27-b425-f9a0d3e645c7")
+		(property "Reference" "#PWR0903" (at 81.28 110.57 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Value" "+5V" (at 81.28 120.57 0) (effects (font (size 1.27 1.27))))
+		(property "Footprint" "" (at 81.28 115.57 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Datasheet" "~" (at 81.28 115.57 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(pin "1" (uuid "be8d3b56-d8c4-4755-961e-215f5a39e70d"))
+		(instances (project "nest-mini-v2-drop-in-pcb" (path "/204e071a-14ed-47a0-be54-332ac2b951cf/18f90dfa-9bd7-48d0-80c5-47366522e296" (reference "#PWR0903") (unit 1))))
+	)
+	(wire (pts (xy 81.28 125.73) (xy 81.28 128.27)) (stroke (width 0) (type default)) (uuid "8218d1f0-f158-4f71-921b-5884856f6dd8"))
+	(symbol
+		(lib_id "power:GND")
+		(at 81.28 128.27 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "620d020f-64b5-483b-8a17-afbc2b6f816e")
+		(property "Reference" "#PWR0904" (at 81.28 123.27000000000001 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Value" "GND" (at 81.28 133.27 0) (effects (font (size 1.27 1.27))))
+		(property "Footprint" "" (at 81.28 128.27 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Datasheet" "~" (at 81.28 128.27 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(pin "1" (uuid "822755e2-4a59-41b6-a8fe-037275a3b158"))
+		(instances (project "nest-mini-v2-drop-in-pcb" (path "/204e071a-14ed-47a0-be54-332ac2b951cf/18f90dfa-9bd7-48d0-80c5-47366522e296" (reference "#PWR0904") (unit 1))))
 	)
 )

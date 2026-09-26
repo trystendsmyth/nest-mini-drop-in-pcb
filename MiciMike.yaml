@@ -304,29 +304,20 @@ switch:
     on_turn_off:
       - script.execute: reset_led
 
-esp32_touch:
-  setup_mode: false
-  sleep_duration: 2ms
-  measurement_duration: 800us
-  low_voltage_reference: 0.8V
-  high_voltage_reference: 2.4V
-
-  filter_mode: IIR_16
-  debounce_count: 2
-  noise_threshold: 0
-  jitter_step: 0
-  smooth_mode: IIR_2
-
-  denoise_grade: BIT8
-  denoise_cap_level: L0
+mpr121:
+  id: mpr121_touch
+  i2c_id: internal_i2c
+  address: 0x5A        # ADDR pin tied to GND
+  touch_debounce: 2
+  release_debounce: 2
 
 binary_sensor:
   - platform: gpio
     id: hardware_mute_switch
     internal: true
     pin:
-      number: GPIO33
-      mode: INPUT_PULLUP
+      number: GPIO1   # ESP_MUTE_DET (10k pull-up on board)
+      mode: INPUT
     on_press:
       # Play mute on sound only if software mute isn't enabled
       - if:
@@ -343,10 +334,10 @@ binary_sensor:
           priority: false
           sound_file: !lambda return id(mute_switch_off_sound);
       - microphone.unmute:
-  - platform: esp32_touch
+  - platform: mpr121
     id: volume_down
-    pin: GPIO4
-    threshold: 539000
+    mpr121_id: mpr121_touch
+    channel: 0         # ELEC0 = TOUCH_L
     on_press:
       then:
         - light.turn_on: left_led
@@ -366,10 +357,10 @@ binary_sensor:
       then:
         - light.turn_off: left_led
 
-  - platform: esp32_touch
+  - platform: mpr121
     id: volume_up
-    pin: GPIO2
-    threshold: 580000
+    mpr121_id: mpr121_touch
+    channel: 2         # ELEC2 = TOUCH_R
     on_press:
       then:
         - light.turn_on: right_led
@@ -389,10 +380,10 @@ binary_sensor:
       then:
         - light.turn_off: right_led
 
-  - platform: esp32_touch
+  - platform: mpr121
     id: action
-    pin: GPIO3
-    threshold: 751000
+    mpr121_id: mpr121_touch
+    channel: 1         # ELEC1 = TOUCH_C
     on_click:
       - if:
           condition:
@@ -457,30 +448,41 @@ light:
     default_transition_length: 100ms
     effects:
       - addressable_lambda:
+          name: "Volume Display"
+          update_interval: 50ms
+          lambda: |-
+            // 4 ring LEDs: light a bar proportional to the media player volume
+            const float v = id(external_media_player).volume;
+            const int n = it.size();
+            const int lit = (int) roundf(v * n);
+            for (int i = 0; i < n; i++) {
+              it[i] = (i < lit) ? Color(255, 255, 255) : Color::BLACK;
+            }
+      - addressable_lambda:
           name: "Waiting for Command"
           update_interval: 100ms
           lambda: |-
             auto light_color = id(led_ring).current_values;
             Color color(light_color.get_red() * 255, light_color.get_green() * 255,
                   light_color.get_blue() * 255);
-            for (uint8_t i = 0; i < 12; i++) {
-              if (i == id(global_led_animation_index) % 12) {
+            for (uint8_t i = 0; i < it.size(); i++) {
+              if (i == id(global_led_animation_index) % it.size()) {
                 it[i] = color;
-              } else if (i == (id(global_led_animation_index) + 11) % 12) {
+              } else if (i == (id(global_led_animation_index) + 11) % it.size()) {
                 it[i] = color * 192;
-              } else if (i == (id(global_led_animation_index) + 10) % 12) {
+              } else if (i == (id(global_led_animation_index) + 10) % it.size()) {
                 it[i] = color * 128;
-              } else if (i == (id(global_led_animation_index) + 6) % 12) {
+              } else if (i == (id(global_led_animation_index) + 6) % it.size()) {
                 it[i] = color;
-              } else if (i == (id(global_led_animation_index) + 5) % 12) {
+              } else if (i == (id(global_led_animation_index) + 5) % it.size()) {
                 it[i] = color * 192;
-              } else if (i == (id(global_led_animation_index) + 4) % 12) {
+              } else if (i == (id(global_led_animation_index) + 4) % it.size()) {
                 it[i] = color * 128;
               } else {
                 it[i] = Color::BLACK;
               }
             }
-            id(global_led_animation_index) = (id(global_led_animation_index) + 1) % 12;
+            id(global_led_animation_index) = (id(global_led_animation_index) + 1) % it.size();
       - addressable_lambda:
           name: "Listening For Command"
           update_interval: 50ms
@@ -488,24 +490,24 @@ light:
             auto light_color = id(led_ring).current_values;
             Color color(light_color.get_red() * 255, light_color.get_green() * 255,
                   light_color.get_blue() * 255);
-            for (uint8_t i = 0; i < 12; i++) {
-              if (i == id(global_led_animation_index) % 12) {
+            for (uint8_t i = 0; i < it.size(); i++) {
+              if (i == id(global_led_animation_index) % it.size()) {
                 it[i] = color;
-              } else if (i == (id(global_led_animation_index) + 11) % 12) {
+              } else if (i == (id(global_led_animation_index) + 11) % it.size()) {
                 it[i] = color * 192;
-              } else if (i == (id(global_led_animation_index) + 10) % 12) {
+              } else if (i == (id(global_led_animation_index) + 10) % it.size()) {
                 it[i] = color * 128;
-              } else if (i == (id(global_led_animation_index) + 6) % 12) {
+              } else if (i == (id(global_led_animation_index) + 6) % it.size()) {
                 it[i] = color;
-              } else if (i == (id(global_led_animation_index) + 5) % 12) {
+              } else if (i == (id(global_led_animation_index) + 5) % it.size()) {
                 it[i] = color * 192;
-              } else if (i == (id(global_led_animation_index) + 4) % 12) {
+              } else if (i == (id(global_led_animation_index) + 4) % it.size()) {
                 it[i] = color * 128;
               } else {
                 it[i] = Color::BLACK;
               }
             }
-            id(global_led_animation_index) = (id(global_led_animation_index) + 1) % 12;
+            id(global_led_animation_index) = (id(global_led_animation_index) + 1) % it.size();
       - addressable_lambda:
           name: "Thinking"
           update_interval: 10ms
@@ -520,10 +522,10 @@ light:
             auto light_color = id(led_ring).current_values;
             Color color(light_color.get_red() * 255, light_color.get_green() * 255,
                   light_color.get_blue() * 255);
-            for (uint8_t i = 0; i < 12; i++) {
-              if (i == id(global_led_animation_index) % 12) {
+            for (uint8_t i = 0; i < it.size(); i++) {
+              if (i == id(global_led_animation_index) % it.size()) {
                 it[i] = color * uint8_t(255/brightness_step_number*(brightness_step_number-brightness_step));
-              } else if (i == (id(global_led_animation_index) + 6) % 12) {
+              } else if (i == (id(global_led_animation_index) + 6) % it.size()) {
                 it[i] = color * uint8_t(255/brightness_step_number*(brightness_step_number-brightness_step));
               } else {
                 it[i] = Color::BLACK;
@@ -541,22 +543,22 @@ light:
           name: "Replying"
           update_interval: 50ms
           lambda: |-
-            id(global_led_animation_index) = (12 + id(global_led_animation_index) - 1) % 12;
+            id(global_led_animation_index) = (12 + id(global_led_animation_index) - 1) % it.size();
             auto light_color = id(led_ring).current_values;
             Color color(light_color.get_red() * 255, light_color.get_green() * 255,
                   light_color.get_blue() * 255);
-            for (uint8_t i = 0; i < 12; i++) {
-              if (i == (id(global_led_animation_index)) % 12) {
+            for (uint8_t i = 0; i < it.size(); i++) {
+              if (i == (id(global_led_animation_index)) % it.size()) {
                 it[i] = color;
-              } else if (i == ( id(global_led_animation_index) + 1) % 12) {
+              } else if (i == ( id(global_led_animation_index) + 1) % it.size()) {
                 it[i] = color * 192;
-              } else if (i == ( id(global_led_animation_index) + 2) % 12) {
+              } else if (i == ( id(global_led_animation_index) + 2) % it.size()) {
                 it[i] = color * 128;
-              } else if (i == ( id(global_led_animation_index) + 6) % 12) {
+              } else if (i == ( id(global_led_animation_index) + 6) % it.size()) {
                 it[i] = color;
-              } else if (i == ( id(global_led_animation_index) + 7) % 12) {
+              } else if (i == ( id(global_led_animation_index) + 7) % it.size()) {
                 it[i] = color * 192;
-              } else if (i == ( id(global_led_animation_index) + 8) % 12) {
+              } else if (i == ( id(global_led_animation_index) + 8) % it.size()) {
                 it[i] = color * 128;
               } else {
                 it[i] = Color::BLACK;
@@ -571,7 +573,7 @@ light:
             auto light_color = id(led_ring).current_values;
             Color color(light_color.get_red() * 255, light_color.get_green() * 255,
                   light_color.get_blue() * 255);
-            for (uint8_t i = 0; i < 12; i++) {
+            for (uint8_t i = 0; i < it.size(); i++) {
               if ( light_color.get_state() ) {
                 it[i] = color;
               } else {
@@ -597,7 +599,7 @@ light:
           lambda: |-
             static int8_t index = 0;
             Color fail_color(255, 0, 0);
-            for (uint8_t i = 0; i < 12; i++) {
+            for (uint8_t i = 0; i < it.size(); i++) {
               if (i % 3) {
                 it[i] = Color::BLACK;
               } else {
@@ -619,7 +621,7 @@ light:
               brightness_decreasing = true;
             }
             Color error_color(255, 0, 0);
-            for (uint8_t i = 0; i < 12; i++) {
+            for (uint8_t i = 0; i < it.size(); i++) {
               it[i] = error_color * uint8_t(255/brightness_step_number*(brightness_step_number-brightness_step));
             }
             if (brightness_decreasing) {
@@ -645,7 +647,7 @@ light:
             Color color(light_color.get_red() * 255, light_color.get_green() * 255,
                   light_color.get_blue() * 255);
             Color muted_color(255, 0, 0);
-            for (uint8_t i = 0; i < 12; i++) {
+            for (uint8_t i = 0; i < it.size(); i++) {
               it[i] = color * uint8_t(255/brightness_step_number*(brightness_step_number-brightness_step));
             }
             if ( id(master_mute_switch).state ) {
@@ -670,8 +672,8 @@ light:
             Color muted_color(255, 0, 0);
             auto timer_ratio = 12.0f * id(first_active_timer).seconds_left / max(id(first_active_timer).total_seconds , static_cast<uint32_t>(1));
             uint8_t last_led_on = static_cast<uint8_t>(ceil(timer_ratio)) - 1;
-            for (uint8_t i = 0; i < 12; i++) {
-              float brightness_dip = ( i == id(global_led_animation_index) % 12 && i != last_led_on ) ? 0.9f : 1.0f ;
+            for (uint8_t i = 0; i < it.size(); i++) {
+              float brightness_dip = ( i == id(global_led_animation_index) % it.size() && i != last_led_on ) ? 0.9f : 1.0f ;
               if (i <= timer_ratio) {
                 it[i] = color * min(255.0f * brightness_dip * (timer_ratio - i) , 255.0f * brightness_dip) ;
               } else {
@@ -686,7 +688,7 @@ light:
               it[9] = muted_color;
               it[10] = Color::BLACK;
             }
-            id(global_led_animation_index) = (12 + id(global_led_animation_index) - 1) % 12;
+            id(global_led_animation_index) = (12 + id(global_led_animation_index) - 1) % it.size();
 
   - platform: partition
     id: led_ring
@@ -705,6 +707,25 @@ light:
       - id: leds_internal
         from: 1
         to: 4
+    effects:
+      - pulse:
+          name: pulse
+          transition_length: 250ms
+          update_interval: 250ms
+      - pulse:
+          name: slow_pulse
+          transition_length: 1s
+          update_interval: 2s
+      - pulse:
+          name: listening_ww
+          transition_length: 1s
+          update_interval: 1s
+          min_brightness: 20%
+          max_brightness: 60%
+      - pulse:
+          name: show_volume
+          transition_length: 100ms
+          update_interval: 500ms
   - platform: partition
     id: right_led
     segments:
@@ -1002,7 +1023,7 @@ script:
       - light.turn_on:
           brightness: !lambda return max( id(led_ring).current_values.get_brightness() , 0.2f );
           id: voice_assistant_leds
-          effect: "Timer tick"
+          effect: "Timer Tick"
 
   - id: control_leds_timer_ringing
     then:
@@ -1166,7 +1187,7 @@ script:
 voice_kit:
   id: voice_kit_component
   i2c_id: internal_i2c
-  reset_pin: GPIO4
+  reset_pin: GPIO17   # XU316_RST (drives Q2 -> XMOS RST_N)
   firmware:
     url: https://github.com/esphome/voice-kit-xmos-firmware/releases/download/v1.3.1/ffva_v1.3.1_upgrade.bin
     version: "1.3.1"
@@ -1180,6 +1201,24 @@ external_components:
     components:
       - voice_kit
     refresh: 0s
+  - source: github://mrtoy-me/esphome-tas58xx@main
+    components: [ tas58xx ]
+    refresh: 0s
+
+audio_dac:
+  - platform: tas58xx
+    id: tas5805m_dac
+    i2c_id: internal_i2c
+    address: 0x2D          # R70 = 15k from ADR/FAULT to DVDD (TAS5805M datasheet table 7-5)
+    tas58xx_dac: TAS5805M
+    enable_pin: GPIO18     # AUDIO_PA_EN -> PDN (47k pull-down)
+    dac_mode: PBTL         # OUT_A/OUT_B are paralleled on this board
+    mixer_mode: MONO
+    # PVDD is 14 V but the Nest Mini driver is small: start at the lowest analog gain
+    # and only raise it after checking for distortion/heat.
+    analog_gain: -15.5dB
+    volume_max: 0dB
+    volume_min: -60dB
 
 i2s_audio:
   - id: i2s_output
@@ -1211,21 +1250,22 @@ microphone:
 speaker:
   - platform: i2s_audio
     id: i2s_audio_speaker
-    sample_rate: 44100
+    sample_rate: 48000
     i2s_mode: secondary
-    i2s_dout_pin: GPIO10
-    bits_per_sample: 16bit
+    i2s_dout_pin: GPIO10    # playback into XMOS X1D00 (AEC reference); XMOS forwards to the amp
+    bits_per_sample: 32bit
     i2s_audio_id: i2s_output
     dac_type: external
-    channel: mono
+    channel: stereo
     timeout: never
     buffer_duration: 100ms
+    audio_dac: tas5805m_dac
 
   # Virtual speakers to combine the announcement and media streams together into one output
   - platform: mixer
     id: mixing_speaker
     output_speaker: i2s_audio_speaker
-    num_channels: 1
+    num_channels: 2
     source_speakers:
       - id: announcement_mixing_input
         timeout: never
@@ -1236,12 +1276,12 @@ speaker:
   - platform: resampler
     id: announcement_resampling_speaker
     output_speaker: announcement_mixing_input
-    sample_rate: 44100
+    sample_rate: 48000
     bits_per_sample: 16
   - platform: resampler
     id: media_resampling_speaker
     output_speaker: media_mixing_input
-    sample_rate: 44100
+    sample_rate: 48000
     bits_per_sample: 16
 
 media_player:
@@ -1256,12 +1296,12 @@ media_player:
       speaker: announcement_resampling_speaker
       format: FLAC     # FLAC is the least processor intensive codec
       num_channels: 1  # Stereo audio is unnecessary for announcements
-      sample_rate: 44100
+      sample_rate: 48000
     media_pipeline:
       speaker: media_resampling_speaker
       format: FLAC     # FLAC is the least processor intensive codec
-      num_channels: 1
-      sample_rate: 44100
+      num_channels: 2
+      sample_rate: 48000
     on_mute:
       - script.execute: control_leds
     on_unmute:

@@ -6,7 +6,7 @@
 	(paper "A3")
 	(title_block
 		(title "Drop in replacement PCB for Nest mini GEN2")
-		(rev "v1")
+		(rev "v2.1")
 		(company "by iMike78 (inpired by Onju voice and HA VPE)")
 	)
 	(lib_symbols
@@ -32627,14 +32627,7 @@
 		(uuid "ebb5ac0b-304d-4d0a-b055-a85e901fa92f")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}" (at 152.4 149.86 0) (effects (font (size 1.27 1.27)) (hide yes)))
 	)
-	(global_label "I2S_MCLK"
-		(shape bidirectional)
-		(at 152.4 121.92 0)
-		(fields_autoplaced yes)
-		(effects (font (size 1.27 1.27)) (justify left))
-		(uuid "02fd523d-a62a-409b-9116-61c434da0bce")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}" (at 152.4 121.92 0) (effects (font (size 1.27 1.27)) (hide yes)))
-	)
+	(no_connect (at 152.4 121.92) (uuid "30c1e6f1-5c8c-4d07-9962-887f849c1227"))
 	(label "MIC_DATA_M_2" (at 289.56 78.74 0) (fields_autoplaced yes) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "8b6067e3-13cf-4968-9188-d2b055c4dc1c"))
 	(wire (pts (xy 322.58 83.82) (xy 317.5 83.82)) (stroke (width 0) (type default)) (uuid "3c2826a0-47c4-4982-911d-385250a36605"))
 	(wire (pts (xy 322.58 86.36) (xy 317.5 86.36)) (stroke (width 0) (type default)) (uuid "c5678643-de99-49d1-aa3c-863debb8780e"))

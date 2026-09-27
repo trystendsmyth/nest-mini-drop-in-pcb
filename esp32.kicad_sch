@@ -6,7 +6,7 @@
 	(paper "A4")
 	(title_block
 		(title "Drop in replacement PCB for Nest mini GEN2")
-		(rev "v1")
+		(rev "v2.1")
 		(company "by iMike78 (inpired by Onju voice and HA VPE)")
 	)
 	(lib_symbols
@@ -4386,7 +4386,7 @@
 		(uuid "c0bb4b2d-0377-49ca-b6dc-9d57b806dd31")
 	)
 	(no_connect
-		(at 148.59 54.61)
+		(at 148.59 82.55)
 		(uuid "c5258da5-dec0-4cb9-b1cd-da4cb6c5d320")
 	)
 	(no_connect
@@ -5545,7 +5545,7 @@
 	)
 	(wire
 		(pts
-			(xy 148.59 82.55) (xy 173.99 82.55)
+			(xy 148.59 54.61) (xy 173.99 54.61)
 		)
 		(stroke
 			(width 0)
@@ -6465,9 +6465,9 @@
 			)
 		)
 	)
-	(global_label "XU316_RST"
+	(global_label "ESP_WS2812"
 		(shape output)
-		(at 173.99 82.55 0)
+		(at 173.99 54.61 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -6477,7 +6477,7 @@
 		)
 		(uuid "7727778d-892c-4ab4-8956-d62867a0d2e5")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 187.5584 82.55 0)
+			(at 187.5584 54.61 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6619,7 +6619,7 @@
 			)
 		)
 	)
-	(global_label "ESP_WS2812"
+	(global_label "XU316_RST"
 		(shape output)
 		(at 173.99 92.71 0)
 		(fields_autoplaced yes)
